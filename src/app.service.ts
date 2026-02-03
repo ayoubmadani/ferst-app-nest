@@ -1,8 +1,13 @@
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AppService {
+  constructor(private readonly config: ConfigService) {}
+
   getHello(): string {
-    return 'Hello World!';
+    // نحصل على المتغير من .env، وإذا لم يوجد نرجع القيمة الافتراضية
+    const val = this.config.get<string>('TEST_ENV') ?? 'no env';
+    return val;
   }
 }
